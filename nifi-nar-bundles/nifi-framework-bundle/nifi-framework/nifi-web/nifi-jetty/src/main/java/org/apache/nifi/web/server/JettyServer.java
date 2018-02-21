@@ -154,15 +154,16 @@ public class JettyServer implements NiFiServer {
 
         // load wars from the bundle
         Handler warHandlers = loadWars(bundles);
+        HandlerList allHandlers = new HandlerList();
 
         // Create a handler for the host header and add it to the server
-        String serverName = determineServerHostname();
+/*  For Docker environments we disable the HostHeaderHandler checking here
+ *        String serverName = determineServerHostname();
         int serverPort = determineServerPort();
         HostHeaderHandler hostHeaderHandler = new HostHeaderHandler(serverName, serverPort);
         logger.info("Created HostHeaderHandler [" + hostHeaderHandler.toString() + "]");
 
-        HandlerList allHandlers = new HandlerList();
-        allHandlers.addHandler(hostHeaderHandler);
+        allHandlers.addHandler(hostHeaderHandler); */
         allHandlers.addHandler(warHandlers);
         server.setHandler(allHandlers);
     }
