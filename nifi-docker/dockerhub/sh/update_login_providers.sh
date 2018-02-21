@@ -45,3 +45,8 @@ edit_property 'Url'                         "${LDAP_URL}"
 edit_property 'User Search Base'            "${LDAP_USER_SEARCH_BASE}"
 edit_property 'User Search Filter'          "${LDAP_USER_SEARCH_FILTER}"
 edit_property 'Identity Strategy'           "${LDAP_IDENTITY_STRATEGY}"
+
+if [  -f "${LDAP_TLS_TRUSTSTORE}" ]; then
+	# in the truststore we expect also the Truststore JKS for the LDAP SSL Trust to tell Jetty the trustStore.
+	echo "java.arg.17=-Djavax.net.ssl.trustStore=${LDAP_TLS_TRUSTSTORE}" | tee -a ${NIFI_HOME}/conf/bootstrap.conf 
+fi
